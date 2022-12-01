@@ -21,6 +21,19 @@ class MenuItemSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'price', 'inventory', 'category', 'category_id']
 
 
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('name',)
+
+
+class UserGroupSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'groups')
+
 
 class ManagerSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -30,13 +43,16 @@ class ManagerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id','username', 'email', 'password')
+        fields = ('id', 'username', 'email', 'password')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))
         user = User.objects.create(**validated_data)
         user.groups.add(Group.objects.get(name='Manager'))
+        user.is_staff = True
+        user.save()
         return user
+
 
 class DeliveryCrewSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -46,7 +62,7 @@ class DeliveryCrewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id','username', 'email', 'password')
+        fields = ('id', 'username', 'email', 'password')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))

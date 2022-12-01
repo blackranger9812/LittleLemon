@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('categories', views.CategoriesView.as_view()),
     path('menu-items/', views.MenuItemsView.as_view()),
@@ -9,4 +10,5 @@ urlpatterns = [
     path('groups/manager/users/<int:pk>', views.SingleManagerView.as_view()),
     path('groups/delivery-crew/users/', views.DeliveryCrewsView.as_view()),
     path('groups/delivery-crew/users/<int:pk>', views.SingleDeliveryCrewView.as_view()),
+    path('users/<int:pk>/groups/', views.AddOrRemoveFromGroup.as_view()),
 ]
