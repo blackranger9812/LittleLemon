@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db import models
 from django.dispatch import receiver
 from rest_framework import serializers
-from .models import MenuItem, Category
+from .models import MenuItem, Category, Cart, Order, OrderItem
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -33,6 +33,27 @@ class UserGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'groups')
+
+
+class UserCartSerializer(serializers.ModelSerializer):
+    menuitem = MenuItemSerializer()
+
+    class Meta:
+        model = Cart
+        fields = ['id', 'menuitem', 'unit_price', 'price', 'user']
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = serializers.RelatedField(source='category', read_only=True)
+    class Meta:
+        model = Order
+        fields = ('id', 'status', 'total', 'date', 'user', 'delivery_crew','items')
 
 
 class ManagerSerializer(serializers.ModelSerializer):
