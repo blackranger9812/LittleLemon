@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from LittleLemonAPI.models import MenuItem
+from restaurant.models import MenuItem
 
 
 class MenuItemTest(TestCase):

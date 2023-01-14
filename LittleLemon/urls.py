@@ -15,11 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
 
-from LittleLemonAPI.views import BookingView
+from restaurant.views import BookingView, BookingViewSet
 
+router = routers.DefaultRouter()
+router.register(r'tables', BookingViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('LittleLemonAPI.urls')),
+    #djoser
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+
+
+    path('restaurant/menu/', include('restaurant.urls')),
+    path('restaurant/booking/', include(router.urls)),
+    path('api/', include('restaurant.urls'))
 
 ]

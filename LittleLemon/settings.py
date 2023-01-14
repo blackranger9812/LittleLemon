@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    # The settings for app updated for the Graded assessment
+
     'djoser',
-    'LittleLemonAPI',
+    'restaurant',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +89,7 @@ DATABASES = {
         }
     }
 }
-# The settings for media files have been updated for the Graded assessment
+
 MEDIA_URL = '/media/'
 
 # Password validation
@@ -128,7 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    "LittleLemonAPI/static",
+    "restaurant/static",
 ]
 
 # Default primary key field type
