@@ -17,10 +17,10 @@ class MenuViewTest(TestCase):
                   ]
 
     def setup(self):
-        MenuItem.objects.create(title='chips', price=10, inventory=8)
-        MenuItem.objects.create(title='cream', price=50, inventory=82)
-        MenuItem.objects.create(title='mango', price=15, inventory=18)
-        MenuItem.objects.create(title='shrimp', price=100, inventory=38)
+        MenuItem.objects.create(title='potato', price=10, inventory=8)
+        MenuItem.objects.create(title='flan', price=50, inventory=2)
+        MenuItem.objects.create(title='mani', price=15, inventory=18)
+
 
     def test_getall(self):
         self.setup()
@@ -29,7 +29,7 @@ class MenuViewTest(TestCase):
         user_token, _ = Token.objects.get_or_create(user=user)
         api_client = APIClient()
         api_client.credentials(HTTP_AUTHORIZATION='Token '+user_token.key)
-        url = reverse('Resturant:all_items')
+        url = reverse('Restaurant:all_items')
         response = api_client.get(url)
         assert response.status_code == 200
         assert response.data == MenuSerializer(self.menu_items, many=True).data
