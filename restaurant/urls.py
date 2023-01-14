@@ -5,6 +5,7 @@ from restaurant.views import *
 from restaurant.views import BookingView
 
 urlpatterns = [
+    path('', index, name='index'),
     re_path(r'^auth/', include('djoser.urls')),
     path('api-token-auth/', obtain_auth_token),
     path('menu/', MenuView.as_view()),
